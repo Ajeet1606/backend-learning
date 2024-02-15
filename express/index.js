@@ -25,6 +25,13 @@ app.get('/ping', (req, res)=>{
     return res.json({message: 'Heyyyaaa!!!'})
 })
 
+app.post('/ping/:name', (req, res) => {
+    console.log('post req received in ping with data', req.params); //post req received in ping with data { name: 'ajeet' }
+
+    console.log('data in headers', req.headers);
+    return res.json({message: 'data received'});
+})
+
 
 app.listen(3000, () => {
     console.log('Server started at port ', PORT);
@@ -38,7 +45,7 @@ takes 2 params:
 /**
  * three ways some client can send us data
  * 1. URL params: /ping/2 or /products/34 or /user/ajeet
- * 2. query params: /phones?sort=ascending&rating=3
+ * 2. query params: /phones?sort=ascending&rating=3         -> can we defined in runtime
  * 3. body params: an object passes in req with API which can contain data in different forms.
  * 
  * 1,2 are security risk prone, they're public.
@@ -47,4 +54,14 @@ takes 2 params:
 /**
  * we can't receive data from client directly because the value and data format of body is totally defined by client which can be unsecure also, hence we use middleware to parse it before using..
  * so initially body is undefined then populated by middleware like body-parser or multer.
+ */
+
+
+/**
+ * passing dynamic data in URL params
+ * /ping/user/:id
+ * value after : is dynamic.
+ * 
+ * 
+ * --> we can pass something in headers as well and access that in req.headers
  */
