@@ -3,9 +3,11 @@
 
 const express = require("express");
 //we got access to express function
+const bodyParser = require('body-parser');
 const app = express();
 //app is new express app object.
-
+app.use(bodyParser.json())  //for parsing application/json
+app.use(bodyParser.urlencoded({extended: true}))    // for parsing application/x-www-form-urlencoded
 const PORT = 3000;
 
 //1. using app object, bind it to a port for socket connection.
@@ -16,6 +18,10 @@ app.get('/ping', (req, res)=>{
     //-> req contains details about incoming req, like query params, body params.
     //-> res object is what we send from here.
     console.log('Request received on /ping');
+
+    console.log('data coming from client in body', req.body);
+
+    console.log('data from client in query', req.query);
     return res.json({message: 'Heyyyaaa!!!'})
 })
 
@@ -28,3 +34,17 @@ takes 2 params:
  -> port number & 
  -> callback (runs when we successfully bind to our port and start listening for new connection.)useful for doing initial things like connecting to DB when server starts.
 */
+
+/**
+ * three ways some client can send us data
+ * 1. URL params: /ping/2 or /products/34 or /user/ajeet
+ * 2. query params: /phones?sort=ascending&rating=3
+ * 3. body params: an object passes in req with API which can contain data in different forms.
+ * 
+ * 1,2 are security risk prone, they're public.
+ */
+
+/**
+ * we can't receive data from client directly because the value and data format of body is totally defined by client which can be unsecure also, hence we use middleware to parse it before using..
+ * so initially body is undefined then populated by middleware like body-parser or multer.
+ */
