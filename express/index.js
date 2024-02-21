@@ -22,13 +22,12 @@ app.get('/ping', (req, res)=>{
     console.log('data coming from client in body', req.body);
 
     console.log('data from client in query', req.query);
-    return res.json({message: 'Heyyyaaa!!!'})
+    return res.json({message: 'Heyyyaaa Ajeet!!!'})
 })
 
 app.post('/ping/:name', (req, res) => {
     console.log('post req received in ping with data', req.params); //post req received in ping with data { name: 'ajeet' }
 
-    console.log('data in headers', req.headers);
     return res.json({message: 'data received'});
 })
 
