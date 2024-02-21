@@ -4,11 +4,16 @@
 const express = require("express");
 //we got access to express function
 const bodyParser = require('body-parser');
+
+//import dotenv
+const dotenv = require("dotenv");
+dotenv.config();    //loads the variables from .env
+
 const app = express();
 //app is new express app object.
 app.use(bodyParser.json())  //for parsing application/json
 app.use(bodyParser.urlencoded({extended: true}))    // for parsing application/x-www-form-urlencoded
-const PORT = 3000;
+const PORT = process.env.PORT
 
 //1. using app object, bind it to a port for socket connection.
 
@@ -32,7 +37,7 @@ app.post('/ping/:name', (req, res) => {
 })
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('Server started at port ', PORT);
 });
 /*
@@ -61,6 +66,9 @@ takes 2 params:
  * /ping/user/:id
  * value after : is dynamic.
  * 
- * 
  * --> we can pass something in headers as well and access that in req.headers
+ */
+
+/**
+ * process, is a global object, specifically for environment variables, it has a property named env. it looks up in operating system, it picks variables from there, if not found there, then it looks up in our project env file. so OS is > local.
  */
